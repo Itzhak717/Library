@@ -1,23 +1,19 @@
 package com.librarysystem.demo.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @Entity
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String userName;
 
     private String firstName;
 
@@ -26,4 +22,7 @@ public class User {
     private String telephone;
 
     private String email;
+
+    @Column(columnDefinition = "enum('male','female')")
+    private String sex;
 }

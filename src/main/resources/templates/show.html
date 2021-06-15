@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!--/*@thymesVar id="user" type="com.librarysystem.demo.model.User"*/-->
+<div>
+        <p th:text="${user.id}">id</p>
+        <p th:text="${user.firstName}">first name</p>
+        <p th:text="${user.lastName}">last name</p>
+</div>
+</body>
+</html>
