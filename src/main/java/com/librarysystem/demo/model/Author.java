@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Data
-@EqualsAndHashCode(exclude = {"users"})
+@EqualsAndHashCode(exclude = {"books"})
 public class Author implements Serializable {
 
     @Id

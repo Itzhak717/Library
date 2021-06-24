@@ -2,6 +2,7 @@ package com.librarysystem.demo.model;
 
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@EqualsAndHashCode(exclude = {"books"})
 public class Publisher implements Serializable {
 
     @Id
