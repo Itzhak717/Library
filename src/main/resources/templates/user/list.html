@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>User List</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+</head>
+
+<body>
+    <div th:replace="~{fragment/header :: header}">Header</div>
+
+    <main>
+        <div class="container py-5">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="table-info">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">User Name</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Edit</th>
+                    </tr>
+                </thead>
+                <tr th:each="user : ${users}">
+                    <th th:text="${user.id}">1</th>
+                    <td th:text="${user.name}">f</td>
+                    <td th:text="${user.userName}">l</td>
+                    <td th:text="${user.email}">123@mail.com</td>
+                    <td>
+                        <form th:object="${user}" th:action="@{'/user/deleteUser/' + ${user.id}}" th:method="post">
+                            <a type="button" class="btn btn-warning btn-sm" th:href="@{'/user/update/'+${user.id}}">Edit
+                            </a>
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </main>
+</body>
+
+</html>

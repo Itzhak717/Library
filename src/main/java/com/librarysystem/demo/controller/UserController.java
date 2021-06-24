@@ -2,7 +2,6 @@ package com.librarysystem.demo.controller;
 
 import com.librarysystem.demo.model.User;
 import com.librarysystem.demo.repository.UserRepository;
-import com.librarysystem.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,19 +18,21 @@ public class UserController {
     public String showById(@PathVariable Long id, Model model){
         userRepository.findById(id).ifPresent(user -> model.addAttribute("user", user));
 
-        return "show";
+        return "user/show";
     }
 
     @GetMapping("/list")
     public String listUser(Model model){
         model.addAttribute("users", userRepository.findAll());
 
-        return "list";
+        return "user/list";
     }
 
     @GetMapping("/register")
-    public String getRegisterForm(){
-        return "addUser";
+    public String getRegisterForm(Model model){
+        User user = new User();
+        model.addAttribute("user", user);
+        return "user/addUser";
     }
 
     @PostMapping("")
@@ -43,13 +44,19 @@ public class UserController {
     @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable Long id, Model model){
         userRepository.findById(id).ifPresent(user -> model.addAttribute("user", user));
-        return "userEdit";
+        return "user/userEdit";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/{id}")
     public String updateUser(@PathVariable Long id, User user){
         user.setId(id);
         userRepository.save(user);
-        return "redirect:/user/" + user.getId();
+        return "redirect:/user/list";
+    }
+
+    @PostMapping("deleteUser/{id}")
+    public String deleteUser(@PathVariable Long id){
+        userRepository.deleteById(id);
+        return "redirect:/user/list";
     }
 }

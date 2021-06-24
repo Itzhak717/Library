@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+        <!--/*@thymesVar id="user" type="com.librarysystem.demo.model.User"*/-->
+        <div>
+                <div th:replace="~{fragment/header :: header}">Header</div>
+
+                <p th:text="${user.id}">id</p>
+                <p th:text="${user.userName}">first name</p>
+                <p th:text="${user.name}">last name</p>
+        </div>
+</body>
+
+</html>
