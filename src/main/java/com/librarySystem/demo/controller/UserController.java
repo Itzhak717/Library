@@ -1,7 +1,7 @@
-package com.librarysystem.demo.controller;
+package com.librarySystem.demo.controller;
 
-import com.librarysystem.demo.model.User;
-import com.librarysystem.demo.repository.UserRepository;
+import com.librarySystem.demo.model.User;
+import com.librarySystem.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

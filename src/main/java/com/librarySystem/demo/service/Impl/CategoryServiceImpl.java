@@ -1,6 +1,6 @@
-package com.librarysystem.demo.service.Impl;
+package com.librarySystem.demo.service.Impl;
 
-import com.librarysystem.demo.service.CategoryService;
+import com.librarySystem.demo.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 @Service

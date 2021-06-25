@@ -1,7 +1,6 @@
-package com.librarysystem.demo.model;
+package com.librarySystem.demo.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,15 +9,14 @@ import java.util.Set;
 
 @Entity
 @Data
-@EqualsAndHashCode(exclude = {"books"})
-public class Author implements Serializable {
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String authorName;
+    private String category;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "authors")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
     private Set<Book> books = new HashSet<>();
 }

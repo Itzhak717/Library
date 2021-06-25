@@ -1,16 +1,12 @@
-package com.librarysystem.demo.service.Impl;
+package com.librarySystem.demo.service.Impl;
 
-import com.librarysystem.demo.model.User;
-import com.librarysystem.demo.repository.UserRepository;
-import com.librarysystem.demo.service.UserService;
-import javassist.NotFoundException;
+import com.librarySystem.demo.model.User;
+import com.librarySystem.demo.repository.UserRepository;
+import com.librarySystem.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {

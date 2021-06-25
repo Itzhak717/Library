@@ -1,8 +1,7 @@
-package com.librarysystem.demo.service.Impl;
+package com.librarySystem.demo.service.Impl;
 
-import com.librarysystem.demo.model.Book;
-import com.librarysystem.demo.repository.BookRepository;
-import com.librarysystem.demo.service.BookService;
+import com.librarySystem.demo.repository.BookRepository;
+import com.librarySystem.demo.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
