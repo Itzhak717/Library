@@ -1,18 +1,14 @@
-package com.librarysystem.demo.ORMTest;
+package com.librarySystem.demo.ORMTest;
 
-import com.librarysystem.demo.model.Author;
-import com.librarysystem.demo.model.Book;
-import com.librarysystem.demo.model.Publisher;
-import com.librarysystem.demo.repository.AuthorRepository;
-import com.librarysystem.demo.repository.BookRepository;
-import com.librarysystem.demo.repository.PublisherRepository;
+import com.librarySystem.demo.model.Author;
+import com.librarySystem.demo.model.Book;
+import com.librarySystem.demo.model.Publisher;
+import com.librarySystem.demo.repository.AuthorRepository;
+import com.librarySystem.demo.repository.BookRepository;
+import com.librarySystem.demo.repository.PublisherRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @SpringBootTest
 public class MapTest {

@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  <!--/*@thymesVar id="book" type="com.librarysystem.demo.model.Book"*/-->
+<!--/*@thymesVar id="book" type="com.librarySystem.demo.model.Book"*/-->
   <div th:replace="~{fragment/header :: header}">Header</div>
 
   <main class="row">
@@ -30,7 +30,7 @@
 
         <div class="col-md-6 py-2">
           <label class="col-form-label" for="publisher">Publisher:</label>
-          <!--/*@thymesVar id="publisherName" type="com.librarysystem.demo.model.Publisher"*/-->
+          <!--/*@thymesVar id="publisherName" type="com.librarySystem.demo.model.Publisher"*/-->
           <input type="text" th:field="*{publisher.publisherName}" class="form-control" id="publisher" />
         </div>
 
@@ -39,7 +39,7 @@
           <input type="text" th:field="*{isbn}" class="form-control" id="isbn" />
         </div>
 
-        <!--/*@thymesVar id="authorName" type="com.librarysystem.demo.model.Author"*/-->
+        <!--/*@thymesVar id="authorName" type="com.librarySystem.demo.model.Author"*/-->
         <div class="col-12 py-2">
           <label class="col-form-label" for="authorName">Author Name:</label>
           <input type="text" th:field="*{authors}" class="form-control" id="authorName" />

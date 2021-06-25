@@ -1,6 +1,6 @@
-package com.librarysystem.demo.service.Impl;
+package com.librarySystem.demo.service.Impl;
 
-import com.librarysystem.demo.service.AuthorService;
+import com.librarySystem.demo.service.AuthorService;
 import org.springframework.stereotype.Service;
 
 @Service
