@@ -1,6 +1,7 @@
 package com.librarySystem.demo.controller;
 
 import com.librarySystem.demo.model.User;
+import com.librarySystem.demo.service.Impl.UserServiceImpl;
 import com.librarySystem.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,7 +16,7 @@ import java.net.URI;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable Long id){
