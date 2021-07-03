@@ -1,62 +1,58 @@
 package com.librarySystem.demo.controller;
 
 import com.librarySystem.demo.model.User;
-import com.librarySystem.demo.repository.UserRepository;
+import com.librarySystem.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-@Controller
-@RequestMapping("user")
+import java.net.URI;
+
+@RestController
+@RequestMapping(value = "user",produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository ;
+    private UserService userService;
 
     @GetMapping("/{id}")
-    public String showById(@PathVariable Long id, Model model){
-        userRepository.findById(id).ifPresent(user -> model.addAttribute("user", user));
+    public ResponseEntity<User> getUser(@PathVariable Long id){
+        User user = userService.getUser(id);
 
-        return "user/show";
+        return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/list")
-    public String listUser(Model model){
-        model.addAttribute("users", userRepository.findAll());
+    @GetMapping
+    public ResponseEntity<Iterable<User>> listUser(){
+        Iterable<User> users = userService.getUsers();
 
-        return "user/list";
-    }
-
-    @GetMapping("/register")
-    public String getRegisterForm(Model model){
-        User user = new User();
-        model.addAttribute("user", user);
-        return "user/addUser";
+        return ResponseEntity.ok(users);
     }
 
     @PostMapping("")
-    public String saveUser(User user){
-        userRepository.save(user);
-        return "redirect:/user/list";
+    public ResponseEntity<User> saveUser(@RequestBody User user){
+        userService.createUser(user);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(user.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(user);
     }
 
-    @GetMapping("/update/{id}")
-    public String showUpdateForm(@PathVariable Long id, Model model){
-        userRepository.findById(id).ifPresent(user -> model.addAttribute("user", user));
-        return "user/userEdit";
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id,@RequestBody User user){
+        userService.updateUser(id,user);
+        return ResponseEntity.ok(user);
     }
 
-    @PostMapping("/{id}")
-    public String updateUser(@PathVariable Long id, User user){
-        user.setId(id);
-        userRepository.save(user);
-        return "redirect:/user/list";
-    }
-
-    @PostMapping("deleteUser/{id}")
-    public String deleteUser(@PathVariable Long id){
-        userRepository.deleteById(id);
-        return "redirect:/user/list";
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id){
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }
