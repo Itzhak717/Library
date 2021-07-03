@@ -15,14 +15,35 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User findById(Long id) {
+    public User getUser(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("id not found."));
+    }
 
-        Optional<User> userOptional = userRepository.findById(id);
+    @Override
+    public Iterable<User> getUsers() {
+        return userRepository.findAll();
+    }
 
-        if (userOptional.isEmpty()){
-            throw new RuntimeException("User Not Found For ID:" + id.toString());
+    @Override
+    public User createUser(User user) {
+        if (userRepository.findByUserName(user.getUserName()).isPresent()){
+            throw new RuntimeException("Username exist.");
         }
+        return userRepository.save(user);
+    }
 
-        return userOptional.get();
+    @Override
+    public User updateUser(Long id, User user) {
+        user.setId(id);
+
+        return userRepository.save(user);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        if (userRepository.findById(id).isEmpty()){
+            throw new RuntimeException("id not found.");
+        }
+        userRepository.deleteById(id);
     }
 }
