@@ -4,6 +4,8 @@ import com.librarySystem.demo.model.Book;
 
 public interface BookService {
 
+    Book getBook(String name);
+
     Book getBook(long id);
 
     Iterable<Book> getBooks();

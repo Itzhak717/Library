@@ -2,7 +2,6 @@ package com.librarySystem.demo.controller;
 
 import com.librarySystem.demo.model.User;
 import com.librarySystem.demo.service.Impl.UserServiceImpl;
-import com.librarySystem.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

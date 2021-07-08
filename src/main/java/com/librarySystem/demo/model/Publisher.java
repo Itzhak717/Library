@@ -3,7 +3,6 @@ package com.librarySystem.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,9 +22,10 @@ public class Publisher implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //@Column(unique = true)
     private String publisherName;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "publisher")
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "publisher")
     @JsonBackReference
     private Set<Book> books = new HashSet<>();
 }
