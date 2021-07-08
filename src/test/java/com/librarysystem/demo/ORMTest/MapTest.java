@@ -25,7 +25,7 @@ public class MapTest {
     @Test
     public void add(){
 
-        Author author1 = new Author();
+       /* Author author1 = new Author();
         author1.setAuthorName("Author1");
         authorRepository.save(author1);
 
@@ -52,7 +52,7 @@ public class MapTest {
         book2.setBookName("book2");
         book2.getAuthors().add(author2);
         book2.setPublisher(publisher1);
-        bookRepository.save(book2);
+        bookRepository.save(book2);*/
 
     }
 }

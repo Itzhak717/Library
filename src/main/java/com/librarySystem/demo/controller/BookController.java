@@ -5,15 +5,13 @@ import com.librarySystem.demo.service.Impl.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
 @RestController
-@RequestMapping(value = "book",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "book",produces={"application/json;charset=UTF-8"})
 public class BookController {
     @Autowired
     private BookServiceImpl bookService;
