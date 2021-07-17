@@ -6,6 +6,8 @@ public interface UserService {
 
     User getUser(Long id);
 
+    User getUser(String username);
+
     Iterable<User> getUsers();
 
     User createUser(User user);

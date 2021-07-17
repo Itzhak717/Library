@@ -4,9 +4,8 @@ import com.librarySystem.demo.model.User;
 import com.librarySystem.demo.repository.UserRepository;
 import com.librarySystem.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -14,9 +13,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @Override
     public User getUser(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("id not found."));
+    }
+
+    @Override
+    public User getUser(String username) {
+        return userRepository.findByUserName(username).orElseThrow(RuntimeException::new);
     }
 
     @Override
@@ -27,8 +34,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(User user) {
         if (userRepository.findByUserName(user.getUserName()).isPresent()){
-            throw new RuntimeException("Username exist.");
+            throw new RuntimeException("Username existed.");
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
