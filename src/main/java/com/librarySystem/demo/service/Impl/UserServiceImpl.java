@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(String username) {
-        return userRepository.findByUserName(username).orElseThrow(RuntimeException::new);
+        return userRepository.findByUsername(username).orElseThrow(RuntimeException::new);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        if (userRepository.findByUserName(user.getUserName()).isPresent()){
+        if (userRepository.findByUsername(user.getUsername()).isPresent()){
             throw new RuntimeException("Username existed.");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
