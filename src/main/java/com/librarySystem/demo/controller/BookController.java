@@ -3,7 +3,6 @@ package com.librarySystem.demo.controller;
 import com.librarySystem.demo.model.Book;
 import com.librarySystem.demo.service.Impl.BookServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -17,8 +16,8 @@ public class BookController {
     private BookServiceImpl bookService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBook(@PathVariable long id){
-        Book book =  bookService.getBook(id);
+    public ResponseEntity<Book> getBook(@PathVariable String id){
+        Book book =  bookService.getBookById(id);
         return ResponseEntity.ok(book);
     }
 
@@ -42,13 +41,13 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable long id, @RequestBody Book book){
+    public ResponseEntity<Book> updateBook(@PathVariable String id, @RequestBody Book book){
         bookService.updateBook(id,book);
         return ResponseEntity.ok(book);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable Long id){
+    public ResponseEntity<Void> deleteBook(@PathVariable String id){
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();
     }

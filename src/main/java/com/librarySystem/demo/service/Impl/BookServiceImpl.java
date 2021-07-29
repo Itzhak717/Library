@@ -1,14 +1,14 @@
 package com.librarySystem.demo.service.Impl;
 
-import com.librarySystem.demo.model.Author;
+import com.librarySystem.demo.Exception.NotFoundException;
 import com.librarySystem.demo.model.Book;
-import com.librarySystem.demo.model.Category;
-import com.librarySystem.demo.model.Publisher;
-import com.librarySystem.demo.repository.AuthorRepository;
 import com.librarySystem.demo.repository.BookRepository;
 import com.librarySystem.demo.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -16,45 +16,55 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    @Autowired
-    private AuthorServiceImpl authorService;
-
-    @Autowired
-    private CategoryServiceImpl categoryService;
-
-    @Autowired
-    private PublisherServiceImpl publisherService;
-
     @Override
-    public Book getBook(String name) {
-        return bookRepository.findByBookName(name).orElseThrow(RuntimeException::new);
+    public List<Book> getBookByName(String name) {
+        if (bookRepository.findByBookNameLike(name).isEmpty()){
+            throw new NotFoundException("Book Not Found!");
+        }
+        return bookRepository.findByBookNameLike(name);
     }
 
     @Override
-    public Book getBook(long id) {
-        return bookRepository.findById(id).orElseThrow(RuntimeException::new);
+    public Book getBookById(String id) {
+        return bookRepository.findById(id).orElseThrow(() -> new NotFoundException("Book id not found!"));
     }
 
     @Override
-    public Iterable<Book> getBooks() {
+    public List<Book> getBookByAuthor(String author) {
+        if (bookRepository.findByAuthors(author).isEmpty()){
+            throw new NotFoundException("Author Not Found!");
+        }
+        return bookRepository.findByAuthors(author);
+    }
+
+    @Override
+    public List<Book> getBookByPublisher(String publisher) {
+        if (bookRepository.findByPublisherLike(publisher).isEmpty()){
+            throw new NotFoundException("publisher Not Found!");
+        }
+        return bookRepository.findByPublisherLike(publisher);
+    }
+
+    @Override
+    public List<Book> getBooks() {
         return bookRepository.findAll();
     }
 
     @Override
     public Book createBook(Book book) {
-        return bookRepository.save(book);
+        return bookRepository.insert(book);
     }
 
     @Override
-    public Book updateBook(long id, Book book) {
-        getBook(id);
+    public Book updateBook(String  id, Book book) {
+        getBookByName(id);
         book.setId(id);
         return bookRepository.save(book);
     }
 
     @Override
-    public void deleteBook(long id) {
-        getBook(id);
+    public void deleteBook(String id) {
+        getBookByName(id);
         bookRepository.deleteById(id);
     }
 }

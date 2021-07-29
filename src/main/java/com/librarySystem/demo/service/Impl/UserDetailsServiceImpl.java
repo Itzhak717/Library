@@ -1,4 +1,4 @@
-package com.librarySystem.demo.service;
+package com.librarySystem.demo.service.Impl;
 
 import com.librarySystem.demo.Exception.NotFoundException;
 import com.librarySystem.demo.model.User;

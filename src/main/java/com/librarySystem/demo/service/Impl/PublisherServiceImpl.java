@@ -12,12 +12,12 @@ public class PublisherServiceImpl implements PublisherService {
     PublisherRepository publisherRepository;
 
     @Override
-    public Publisher getPublisher(long id) {
+    public Publisher getPublisherById(String id) {
         return publisherRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
     @Override
-    public Publisher getPublisher(String name) {
+    public Publisher getPublisherByName(String name) {
         return publisherRepository.findByPublisherName(name).orElseThrow(RuntimeException::new);
     }
 
@@ -32,7 +32,7 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public Publisher updatePublisher(long id, Publisher publisher) {
+    public Publisher updatePublisher(String id, Publisher publisher) {
         if (!publisherRepository.existsById(id)){
             throw new RuntimeException("not found");
         }
@@ -41,7 +41,7 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public void deletePublisher(long id) {
+    public void deletePublisher(String id) {
         if (!publisherRepository.existsById(id)){
             throw new RuntimeException("not found");
         }

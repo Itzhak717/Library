@@ -1,19 +1,18 @@
 package com.librarySystem.demo.service;
 
 import com.librarySystem.demo.model.Author;
-import com.librarySystem.demo.model.Book;
 
 public interface AuthorService {
 
-    Author getAuthor(long id);
+    Author getAuthorById(String id);
 
-    Author getAuthor(String name);
+    Author getAuthorByName(String name);
 
     Iterable<Author> getAuthors();
 
     Author createAuthor(Author author);
 
-    Author updateAuthor(long id, Author author);
+    Author updateAuthor(String id, Author author);
 
-    void deleteAuthor(long id);
+    void deleteAuthor(String id);
 }

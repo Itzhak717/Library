@@ -12,12 +12,12 @@ public class AuthorServiceImpl implements AuthorService {
     AuthorRepository authorRepository;
 
     @Override
-    public Author getAuthor(long id) {
+    public Author getAuthorById(String id) {
         return authorRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
     @Override
-    public Author getAuthor(String name) {
+    public Author getAuthorByName(String name) {
         return authorRepository.findAuthorByAuthorName(name).orElseThrow(RuntimeException::new);
     }
 
@@ -28,22 +28,22 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author createAuthor(Author author) {
-        if (getAuthor(author.getAuthorName()) == null){
+        if (getAuthorByName(author.getAuthorName()) == null){
             return authorRepository.save(author);
         }
         return author;
     }
 
     @Override
-    public Author updateAuthor(long id, Author author) {
-        getAuthor(id);
+    public Author updateAuthor(String id, Author author) {
+        getAuthorById(id);
         author.setId(id);
         return authorRepository.save(author);
     }
 
     @Override
-    public void deleteAuthor(long id) {
-        getAuthor(id);
+    public void deleteAuthor(String id) {
+        getAuthorById(id);
         authorRepository.deleteById(id);
     }
 }

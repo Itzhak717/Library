@@ -2,17 +2,24 @@ package com.librarySystem.demo.service;
 
 import com.librarySystem.demo.model.Book;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface BookService {
 
-    Book getBook(String name);
+    List<Book> getBookByName(String name);
 
-    Book getBook(long id);
+    Book getBookById(String id);
 
-    Iterable<Book> getBooks();
+    List<Book> getBookByAuthor(String author);
+
+    List<Book> getBookByPublisher(String publisher);
+
+    List<Book> getBooks();
 
     Book createBook(Book book);
 
-    Book updateBook(long id, Book book);
+    Book updateBook(String id, Book book);
 
-    void deleteBook(long id);
+    void deleteBook(String id);
 }

@@ -1,6 +1,6 @@
 package com.librarySystem.demo.security;
 
-import com.librarySystem.demo.service.UserDetailsServiceImpl;
+import com.librarySystem.demo.service.Impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

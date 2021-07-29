@@ -12,12 +12,12 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryRepository categoryRepository;
 
     @Override
-    public Category getCategory(String name) {
+    public Category getCategoryByName(String name) {
         return categoryRepository.findByCategory(name).orElseThrow(RuntimeException::new);
     }
 
     @Override
-    public Category getCategory(long id) {
+    public Category getCategoryById(String id) {
         return categoryRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
@@ -28,14 +28,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category createCategory(Category category) {
-        if (getCategory(category.getCategory()) == null){
+        if (getCategoryByName(category.getCategory()) == null){
             return categoryRepository.save(category);
         }
         return category;
     }
 
     @Override
-    public Category updateCategory(long id, Category category) {
+    public Category updateCategory(String id, Category category) {
         if (!categoryRepository.existsById(id)){
             throw new RuntimeException("not found");
         }
@@ -44,7 +44,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteCategory(long id) {
+    public void deleteCategory(String id) {
         if (!categoryRepository.existsById(id)){
             throw new RuntimeException("not found");
         }
