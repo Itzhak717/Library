@@ -41,4 +41,6 @@ public class Book{
     //@JoinTable(name = "book_category", joinColumns = {@JoinColumn(name = "book_id")},
     //        inverseJoinColumns = {@JoinColumn(name = "category_id")})
     private Set<String> categories = new HashSet<>();
+
+    private boolean borrowed = false;
 }

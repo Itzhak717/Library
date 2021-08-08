@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -17,7 +16,7 @@ public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
 
     @Override
-    public List<Book> getBookByName(String name) {
+    public List<Book> getBooksByName(String name) {
         if (bookRepository.findByBookNameLike(name).isEmpty()){
             throw new NotFoundException("Book Not Found!");
         }
@@ -30,7 +29,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> getBookByAuthor(String author) {
+    public List<Book> getBooksByAuthor(String author) {
         if (bookRepository.findByAuthors(author).isEmpty()){
             throw new NotFoundException("Author Not Found!");
         }
@@ -38,7 +37,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> getBookByPublisher(String publisher) {
+    public List<Book> getBooksByPublisher(String publisher) {
         if (bookRepository.findByPublisherLike(publisher).isEmpty()){
             throw new NotFoundException("publisher Not Found!");
         }
@@ -57,14 +56,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book updateBook(String  id, Book book) {
-        getBookByName(id);
+        getBooksByName(id);
         book.setId(id);
         return bookRepository.save(book);
     }
 
     @Override
     public void deleteBook(String id) {
-        getBookByName(id);
+        getBooksByName(id);
         bookRepository.deleteById(id);
     }
 }
