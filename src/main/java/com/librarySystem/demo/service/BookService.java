@@ -21,4 +21,8 @@ public interface BookService {
     Book updateBook(String id, Book book);
 
     void deleteBook(String id);
+
+    void borrowedBook(String id);
+
+    void returnBook(String id);
 }

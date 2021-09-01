@@ -56,7 +56,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book updateBook(String  id, Book book) {
-        getBooksByName(id);
+        //getBooksByName(id);
         book.setId(id);
         return bookRepository.save(book);
     }
@@ -65,5 +65,19 @@ public class BookServiceImpl implements BookService {
     public void deleteBook(String id) {
         getBooksByName(id);
         bookRepository.deleteById(id);
+    }
+
+    @Override
+    public void borrowedBook(String id) {
+        Book book = getBookById(id);
+        book.setBorrowed(true);
+        bookRepository.save(book);
+    }
+
+    @Override
+    public void returnBook(String id) {
+        Book book = getBookById(id);
+        book.setBorrowed(false);
+        bookRepository.save(book);
     }
 }

@@ -21,6 +21,9 @@ public class BorrowedServiceImpl implements BorrowedService {
     BorrowedRepository borrowedRepository;
 
     @Autowired
+    BookServiceImpl bookService;
+
+    @Autowired
     private UserIdentity userIdentity;
 
     @Override
@@ -47,12 +50,14 @@ public class BorrowedServiceImpl implements BorrowedService {
         borrowed.setReaderId(userIdentity.getId());
         borrowed.setBookId(bookId);
         borrowed.setBorrowedDate(calendar.getTime());
+        bookService.borrowedBook(bookId);
 
         return borrowedRepository.save(borrowed);
     }
 
     @Override
     public void returnBook(long borrowedId) {
+        bookService.returnBook(getBorrowedBook(borrowedId).getBookId());
         borrowedRepository.deleteById(borrowedId);
     }
 
