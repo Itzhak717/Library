@@ -3,6 +3,7 @@ package com.librarySystem.demo.controller;
 import com.librarySystem.demo.model.Borrowed;
 import com.librarySystem.demo.security.UserIdentity;
 import com.librarySystem.demo.service.Impl.BorrowedServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,9 @@ public class BorrowedController {
     @Autowired
     private UserIdentity userIdentity;
 
+    @Operation(
+            summary = "列出借閱的書"
+    )
     @GetMapping("/{id}")
     public ResponseEntity<List<Borrowed>> listBorrowed(@PathVariable long id){
         List<Borrowed> borrowed = borrowedService.listBorrowedBooks(id);
@@ -30,6 +34,9 @@ public class BorrowedController {
         return ResponseEntity.ok(borrowed);
     }
 
+    @Operation(
+            summary = "借閱書籍"
+    )
     @PostMapping("")
     public ResponseEntity<Borrowed> borrowedBook(@RequestBody List<String> books){
         for (String bookId : books) {
@@ -45,6 +52,9 @@ public class BorrowedController {
         return ResponseEntity.created(location).build();
     }
 
+    @Operation(
+            summary = "續借書籍"
+    )
     @PutMapping("/{id}")
     public ResponseEntity<Borrowed> extendDate(@RequestBody Borrowed borrowed){
         borrowedService.extendTime(borrowed);
@@ -52,6 +62,9 @@ public class BorrowedController {
         return ResponseEntity.ok(borrowed);
     }
 
+    @Operation(
+            summary = "還書"
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> returnBook(@PathVariable long id){
         borrowedService.returnBook(id);

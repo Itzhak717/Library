@@ -2,6 +2,8 @@ package com.librarySystem.demo.controller;
 
 import com.librarySystem.demo.security.AuthRequest;
 import com.librarySystem.demo.security.JWTService;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Hidden
 @RestController
 @RequestMapping(value = "/auth",produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthController {
