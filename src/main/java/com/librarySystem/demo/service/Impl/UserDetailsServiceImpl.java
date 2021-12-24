@@ -1,7 +1,8 @@
-package com.librarySystem.demo.security;
+package com.librarySystem.demo.service.Impl;
 
 import com.librarySystem.demo.Exception.NotFoundException;
 import com.librarySystem.demo.model.User;
+import com.librarySystem.demo.security.SpringUser;
 import com.librarySystem.demo.service.Impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,13 +22,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserServiceImpl userService;
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String s){
         try {
-            User user = userService.getUser(s);
+            User user = userService.getUserByEmail(s);
 
             return new SpringUser(user);
         }catch (NotFoundException e) {
-            throw new UsernameNotFoundException("Username not found.");
+            throw new UsernameNotFoundException("User not found.");
         }
     }
 }

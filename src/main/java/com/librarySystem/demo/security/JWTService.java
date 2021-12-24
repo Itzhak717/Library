@@ -26,7 +26,7 @@ public class JWTService {
 
     public String generateToken(AuthRequest request){
         Authentication authentication =
-                new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword());
+                new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword());
         authentication = authenticationManager.authenticate(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
@@ -34,7 +34,7 @@ public class JWTService {
         calendar.add(Calendar.HOUR, 24);
 
         Claims claims = Jwts.claims();
-        claims.put("username", userDetails.getUsername());
+        claims.setSubject(userDetails.getUsername());
         claims.setExpiration(calendar.getTime());
         claims.setIssuer("Itzhak");
 
@@ -46,18 +46,13 @@ public class JWTService {
                 .compact();
     }
 
-    public Map<String ,Object> parseToken(String token) {
+    public Claims parseToken(String token) {
         Key secretKey = Keys.hmacShaKeyFor(KEY.getBytes());
 
         JwtParser parser = Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build();
 
-        Claims claims = parser
-                .parseClaimsJws(token)
-                .getBody();
-
-        return claims.entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey,Map.Entry::getValue));
+        return parser.parseClaimsJws(token).getBody();
     }
 }

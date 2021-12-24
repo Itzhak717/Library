@@ -1,14 +1,14 @@
 package com.librarySystem.demo.filter;
 
 import com.librarySystem.demo.security.JWTService;
-import com.librarySystem.demo.security.UserDetailsServiceImpl;
+import com.librarySystem.demo.service.Impl.UserDetailsServiceImpl;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -17,7 +17,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
 
 @Component
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
@@ -35,8 +34,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         if (authHeader != null) {
             String accessToken = authHeader.replace("Bearer ", "");
 
-            Map<String, Object> claims = jwtService.parseToken(accessToken);
-            String username = (String) claims.get("username");
+            Claims claims = jwtService.parseToken(accessToken);
+            String username = claims.getSubject();
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             Authentication authentication =

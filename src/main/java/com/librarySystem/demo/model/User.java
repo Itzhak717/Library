@@ -1,16 +1,24 @@
 package com.librarySystem.demo.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.security.core.userdetails.UserDetails;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
-public class User implements Serializable{
+@AllArgsConstructor
+@NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,19 +26,18 @@ public class User implements Serializable{
 
     private String username;
 
-    private String name;
-
     private String password;
-
-    private String telephone;
 
     private String email;
 
-    @Column(columnDefinition = "enum('male','female')")
+    @CreatedDate
+    private Date createDate;
+
+    @Column(columnDefinition = "enum('Male','Female')")
     private String sex;
 
-    @ElementCollection(targetClass = UserAuthority.class,fetch = FetchType.EAGER)
-    @JoinTable(name = "User_authority", joinColumns = @JoinColumn(name = "username"))
+    @ManyToMany(cascade = {CascadeType.ALL},fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "user_id")},inverseJoinColumns = {@JoinColumn(name = "role_id")})
     @Enumerated(value = EnumType.STRING)
-    private List<UserAuthority> authorities;
+    private Set<Role> roles = new HashSet<Role>();
 }

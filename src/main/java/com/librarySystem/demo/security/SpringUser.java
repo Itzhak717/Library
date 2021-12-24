@@ -20,13 +20,13 @@ public class SpringUser implements UserDetails {
     }
 
     public String getName(){
-        return user.getName();
+        return user.getUsername();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getAuthorities().stream()
-                .map(auth -> new SimpleGrantedAuthority(auth.name()))
+        return user.getRoles().stream()
+                .map(auth -> new SimpleGrantedAuthority(auth.getRole()))
                 .collect(Collectors.toList());
     }
 
@@ -37,7 +37,7 @@ public class SpringUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return user.getEmail();
     }
 
     @Override

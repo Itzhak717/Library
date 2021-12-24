@@ -1,5 +1,6 @@
 package com.librarySystem.demo.service.Impl;
 
+import com.librarySystem.demo.model.Role;
 import com.librarySystem.demo.model.User;
 import com.librarySystem.demo.repository.UserRepository;
 import com.librarySystem.demo.service.UserService;
@@ -7,11 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.HashSet;
+import java.util.Set;
+
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleServiceImpl roleService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -27,24 +35,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(RuntimeException::new);
+    }
+
+    @Override
     public Iterable<User> getUsers() {
         return userRepository.findAll();
     }
 
     @Override
-    public User createUser(User user) {
+    public void createUser(User user) {
         if (userRepository.findByUsername(user.getUsername()).isPresent()){
             throw new RuntimeException("Username existed.");
         }
+        Role userRole = roleService.findByRole("USER");
+
+        Set<Role> roles = new HashSet<>();
+        roles.add(userRole);
+        for(Role role: user.getRoles()){
+            roles.add(roleService.findByRole(role.getRole()));
+        }
+        user.setRoles(roles);
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Override
-    public User updateUser(Long id, User user) {
+    public void updateUser(Long id, User user) {
         user.setId(id);
 
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Override
