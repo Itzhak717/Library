@@ -7,15 +7,15 @@ import java.util.List;
 
 public interface BorrowedService {
 
-    List<Borrowed> listBorrowedBooks(long userId);
+    List<Borrowed> listBorrowedBooks(Long userId);
 
-    Borrowed getBorrowedBook(long borrowedId);
+    Borrowed getBorrowedBook(Long borrowedId);
 
-    Date showBorrowedDate(long borrowedId);
+    Date showBorrowedDate(Long borrowedId);
 
-    Borrowed setBorrowed(String bookId);
+    Borrowed saveBorrowed(String bookId, Long userId);
 
-    void returnBook(long borrowedId);
+    void returnBook(Long borrowedId);
 
-    Borrowed extendTime(Borrowed borrowed);
+    Borrowed extendTime(Long borrowedId, Long userId);
 }

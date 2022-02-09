@@ -1,19 +1,17 @@
 package com.librarySystem.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
 @Document
+@Schema(description = "Book Information")
 @Getter
 @Setter
 public class Book{
@@ -22,25 +20,22 @@ public class Book{
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private String  id;
 
+    @NotBlank
     private String isbn;
 
-    private String introduction;
+    private String description;
 
-    private String bookName;
+    @NotBlank
+    private String title;
 
-    //@ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.ALL})
-    //@JoinColumn(name = "publisher_id")
+    @NotBlank
     private String publisher;
 
-    //@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    //@JoinTable(name = "book_author", joinColumns = {@JoinColumn(name = "book_id")},
-    //        inverseJoinColumns = {@JoinColumn(name = "author_id")})
+    @NotBlank
     private Set<String> authors = new HashSet<>();
 
-    //@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
-    //@JoinTable(name = "book_category", joinColumns = {@JoinColumn(name = "book_id")},
-    //        inverseJoinColumns = {@JoinColumn(name = "category_id")})
-    private Set<String> categories = new HashSet<>();
+    @NotBlank
+    private String publicationYear;
 
     private boolean borrowed = false;
 }

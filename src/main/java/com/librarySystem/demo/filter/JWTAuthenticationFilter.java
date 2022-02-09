@@ -30,19 +30,28 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
-        String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (authHeader != null) {
-            String accessToken = authHeader.replace("Bearer ", "");
+        try {
+            String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+            if (authHeader != null) {
+                String accessToken = authHeader.replace("Bearer ", "");
 
-            Claims claims = jwtService.parseToken(accessToken);
-            String username = claims.getSubject();
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                Claims claims = jwtService.parseToken(accessToken);
+                String username = claims.getSubject();
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            Authentication authentication =
-                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                Authentication authentication =
+                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+
+            chain.doFilter(request, response);
         }
+        catch (io.jsonwebtoken.ExpiredJwtException e) {
+            final String expiredMsg = e.getMessage();
+            logger.warn(expiredMsg);
 
-        chain.doFilter(request, response);
+            final String msg = (expiredMsg != null) ? expiredMsg : "Unauthorized";
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, msg);
+        }
     }
 }

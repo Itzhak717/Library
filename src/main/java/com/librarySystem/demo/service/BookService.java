@@ -6,15 +6,9 @@ import java.util.List;
 
 public interface BookService {
 
-    List<Book> getBooksByName(String name);
-
     Book getBookById(String id);
 
-    List<Book> getBooksByAuthor(String author);
-
-    List<Book> getBooksByPublisher(String publisher);
-
-    List<Book> getBooks();
+    List<Book> getBooks(String name,String search ,String type, int page, String order);
 
     Book createBook(Book book);
 
@@ -22,7 +16,7 @@ public interface BookService {
 
     void deleteBook(String id);
 
-    void borrowedBook(String id);
+    void borrowBook(String id);
 
     void returnBook(String id);
 }

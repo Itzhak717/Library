@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  library-system:
+    image: library-server
+    ports:
+      - "8080:8080"
+    networks:
+      - library-server
+    depends_on:
+      - mysqldb
+    environment:
+      - LIBRARY_MYSQL_URL=jdbc:mysql://localhost:3306/
+      - LIBRARY_MYSQL_USERNAME=root
+      - LIBRARY_MYSQL_PASSWORD=mysqlpassword
+      - LIBRARY_MONGODB_URL=mongodb+srv://00123:00123password@cluster0.ysp8h.mongodb.net/library?retryWrites=true&w=majority
+ 
+  mysqldb:
+    image: mysql:8
+    networks:
+      - library-server
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=library
+
+networks:
+  library-server: 

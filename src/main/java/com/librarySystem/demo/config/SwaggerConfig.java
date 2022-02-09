@@ -11,9 +11,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
     @Bean
-    public OpenAPI openAPI(){
+    public OpenAPI openAPI() {
         Info info = new Info()
-                .title("Spring Boot API Document");
+                .title("Spring Boot API Document")
+                .description("This is my Library system project");
 
         String securitySchemeName = "JWT Authentication";
         SecurityRequirement securityRequirement =
@@ -21,10 +22,10 @@ public class SwaggerConfig {
         Components components = new Components()
                 .addSecuritySchemes(securitySchemeName,
                         new SecurityScheme()
-                .name(securitySchemeName)
-                .type(SecurityScheme.Type.HTTP)
-                .scheme("bearer")
-                .bearerFormat("JWT"));
+                                .name(securitySchemeName)
+                                .type(SecurityScheme.Type.HTTP)
+                                .scheme("bearer")
+                                .bearerFormat("JWT"));
 
         return new OpenAPI()
                 .info(info)

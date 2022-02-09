@@ -1,5 +1,6 @@
 package com.librarySystem.demo.security;
 
+import com.librarySystem.demo.model.AuthRequest;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
@@ -13,8 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Calendar;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class JWTService {

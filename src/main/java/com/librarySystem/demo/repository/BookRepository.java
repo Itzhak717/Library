@@ -1,18 +1,14 @@
 package com.librarySystem.demo.repository;
 
 import com.librarySystem.demo.model.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.repository.CrudRepository;
-
-import java.util.List;
-import java.util.Optional;
 
 public interface BookRepository extends MongoRepository<Book, String> {
-    List<Book> findByBookNameLike(String name);
+    Page<Book> findByTitleLikeIgnoreCase(String name, Pageable pageable);
 
-    List<Book> findByPublisherLike(String name);
+    Page<Book> findByPublisherLikeIgnoreCase(String name, Pageable pageable);
 
-    List<Book> findByAuthors(String name);
-
-    List<Book> findByCategories(String name);
+    Page<Book> findByAuthorsLikeIgnoreCase(String name,Pageable pageable);
 }

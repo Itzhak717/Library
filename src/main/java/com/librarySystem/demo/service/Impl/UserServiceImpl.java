@@ -1,5 +1,7 @@
 package com.librarySystem.demo.service.Impl;
 
+import com.librarySystem.demo.Exception.ExistException;
+import com.librarySystem.demo.Exception.NotFoundException;
 import com.librarySystem.demo.model.Role;
 import com.librarySystem.demo.model.User;
 import com.librarySystem.demo.repository.UserRepository;
@@ -31,12 +33,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(String username) {
-        return userRepository.findByUsername(username).orElseThrow(RuntimeException::new);
+        return userRepository.findByUsername(username).orElseThrow(()->new  NotFoundException("Username not found."));
     }
 
     @Override
     public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(RuntimeException::new);
+        return userRepository.findByEmail(email).orElseThrow(()->new  NotFoundException("Email not found."));
     }
 
     @Override
@@ -47,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createUser(User user) {
         if (userRepository.findByUsername(user.getUsername()).isPresent()){
-            throw new RuntimeException("Username existed.");
+            throw new ExistException("Username existed.");
         }
         Role userRole = roleService.findByRole("USER");
 
@@ -72,7 +74,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long id) {
         if (userRepository.findById(id).isEmpty()){
-            throw new RuntimeException("id not found.");
+            throw new NotFoundException("id not found.");
         }
         userRepository.deleteById(id);
     }

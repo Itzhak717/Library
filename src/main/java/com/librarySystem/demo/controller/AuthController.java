@@ -1,41 +1,76 @@
 package com.librarySystem.demo.controller;
 
-import com.librarySystem.demo.security.AuthRequest;
+import com.librarySystem.demo.model.AuthRequest;
+import com.librarySystem.demo.model.User;
 import com.librarySystem.demo.security.JWTService;
-import io.swagger.v3.oas.annotations.Hidden;
+import com.librarySystem.demo.service.Impl.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-@Hidden
+//@CrossOrigin
 @RestController
-@RequestMapping(value = "/auth",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "",produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthController {
 
     @Autowired
     private JWTService jwtService;
 
-    @PostMapping
+    @Autowired
+    private UserServiceImpl userService;
+
+    @Operation(
+            summary = "根據Email和密碼登入帳號",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "login successfully",
+                            content = @Content
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "wrong username or password",
+                            content = @Content
+                    )
+            }
+    )
+    @PostMapping("/login")
     public ResponseEntity<Map<String ,String>> issueToken(@Valid @RequestBody AuthRequest request){
+        User user = userService.getUserByEmail(request.getEmail());
         String token = jwtService.generateToken(request);
-        Map<String ,String> response = Collections.singletonMap("token", token);
+        Map<String ,String> response = new HashMap<>();
+        response.put("token", token);
+        response.put("userId",user.getId().toString());
 
         return ResponseEntity.ok(response);
     }
 
+    @Operation(
+            summary = "解析JWT",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "parse token successfully",
+                            content = @Content
+                    ),
+                    @ApiResponse(
+                            responseCode = "401",
+                            description = "JWT Unauthorized",
+                            content = @Content
+                    )
+            }
+    )
     @PostMapping("/parse")
-    public ResponseEntity<Map<String ,Object>> parseToken(@RequestBody Map<String , String> request){
-        String token = request.get("token");
+    public ResponseEntity<Map<String ,Object>> parseToken(@Parameter(description = "JSON Web Token") @RequestBody String token){
         Map<String , Object> response = jwtService.parseToken(token);
 
         return ResponseEntity.ok(response);
