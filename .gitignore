@@ -32,6 +32,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+docker-compose.yml
+Dockerfile
+
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
